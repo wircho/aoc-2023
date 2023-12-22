@@ -119,30 +119,11 @@ num_straight_contained_boxes = max(0, int((steps - s_to_side - max_stop_distance
 print(f"-- Num straight contained boxes: {num_straight_contained_boxes}")
 num_even = num_straight_contained_boxes // 2  # Starts odd
 num_odd = num_straight_contained_boxes - num_even
-entry_point = _w
-output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
 
-print(f"-- Output so far (straight 1): {output}")
+for entry_point in [_w, _e, _n, _s]:
+    output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
+    print(f"-- Output so far (straight line): {output}")
 
-# Similar for b_i = 0, b_j < 0:
-entry_point = _e
-output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
-
-print(f"-- Output so far (straight 2): {output}")
-
-# Similar for b_i > 0, b_j = 0:
-entry_point = _n
-output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
-
-
-print(f"-- Output so far (straight 3): {output}")
-
-# Similar for b_i < 0, b_j = 0:
-entry_point = _s
-output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
-
-
-print(f"-- Output so far (straight 4): {output}")
 
 
 # We need for sure that s_to_side + (b_j - 1) * side + 1 <= steps
