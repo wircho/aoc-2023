@@ -4,22 +4,12 @@
 INPUT_PATH = 'inputs/21.txt'
 with open(INPUT_PATH) as file: input = file.read()
 
-# input = """...
-# .S.
-# ..."""
-
-# steps = 3
-
 steps = 26501365
 
 # IMPORTS
 # =======
 
-import re
-from itertools import product, chain
-import time
-import inspect
-from math import lcm, ceil
+from itertools import product
 
 # SOLUTION
 # ========
@@ -55,7 +45,6 @@ special_point_box_reach_stop = {}  # special_point -> 0 or 1 -> set of points
 distances_to_special_points = {}   # any point -> special_point -> distance
 max_stop_distance = 0
 for special_point in special_points_and_S:
-    print(f"Special point: {special_point}")
     step = 0
     positions = {step: set([special_point])}
     distances_to_special_points.setdefault(special_point, {}).update({special_point: 0})
@@ -73,7 +62,6 @@ for special_point in special_points_and_S:
         if step >= 3 and len(positions[step]) == len(positions[step - 2]) and len(positions[step - 1]) == len(positions[step - 3]):
             max_stop_distance = max(max_stop_distance, step)
             special_point_box_reach_stop[special_point] = {step % 2: positions[step], (step - 1) % 2: positions[step - 1]}
-            print(f" Stopped at {step}, reaching {len(positions[step])} positions (0: {len(special_point_box_reach_stop[special_point][0])}, 1: {len(special_point_box_reach_stop[special_point][1])})")
             break
     special_point_box_reach[special_point] = positions
 
@@ -105,7 +93,6 @@ assert steps % 2 == 1
 output = 0
 output += len(special_point_box_reach_stop[S].get(steps, special_point_box_reach_stop[S][steps % 2]))
 
-print(f"-- Output so far (last addition = internal reach): {output}")
 
 # For b_i = 0, b_j > 0, we have:
 # Distance to the box is:
@@ -116,13 +103,11 @@ print(f"-- Output so far (last addition = internal reach): {output}")
 # b_j <= (steps - s_to_side - max_stop_distance - 1) / side + 1
 # b_j <= int((steps - s_to_side - max_stop_distance - 1) / side + 1)
 num_straight_contained_boxes = max(0, int((steps - s_to_side - max_stop_distance - 1) / side + 1))
-print(f"-- Num straight contained boxes: {num_straight_contained_boxes}")
 num_even = num_straight_contained_boxes // 2  # Starts odd
 num_odd = num_straight_contained_boxes - num_even
 
 for entry_point in [_w, _e, _n, _s]:
     output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
-    print(f"-- Output so far (straight line): {output}")
 
 
 
@@ -132,7 +117,6 @@ for entry_point in [_w, _e, _n, _s]:
 # b_j <= (steps - s_to_side - 1) / side + 1
 # b_j <= int((steps - s_to_side - 1) / side + 1)
 max_index_of_reachable_box = int((steps - s_to_side - 1) / side + 1)
-print(f"-- Max index of reachable box: {max_index_of_reachable_box}")
 num_non_trivial_boxes = 0
 for b_j in range(num_straight_contained_boxes + 1, max_index_of_reachable_box + 1):
     distance_to_box = s_to_side + (b_j - 1) * side + 1
@@ -142,9 +126,7 @@ for b_j in range(num_straight_contained_boxes + 1, max_index_of_reachable_box + 
         num_non_trivial_boxes += 1
         output += len(special_point_box_reach[entry_point].get(left_over_steps, special_point_box_reach_stop[entry_point][left_over_steps % 2]))
 
-print(f"-- Output so far: {output}")
 
-print(f"Num non-trivial boxes so far: {num_non_trivial_boxes}")
 
 # For b_i > 0 and b_j > 0:
 # Distance to the box is:
@@ -156,7 +138,6 @@ print(f"Num non-trivial boxes so far: {num_non_trivial_boxes}")
 # abs(b_i) + abs(b_j) <= (steps - 1 - max_stop_distance) / side
 # b_i + b_j <= int((steps - 1 - max_stop_distance) / side)
 contained_triangle_height = max(0, int((steps - 1 - max_stop_distance) / side) - 1)
-print(f"-- Contained triangle height: {contained_triangle_height}")
 if contained_triangle_height % 2 == 0:
     half_contained_triangle_height = contained_triangle_height // 2
     # num_odd = 1 + 3 + ... + 2 * half_contained_triangle_height - 1
@@ -172,7 +153,6 @@ else:
 for entry_point in [_nw, _se, _sw, _ne]:
     output += num_even * len(special_point_box_reach_stop[entry_point][0]) + num_odd * len(special_point_box_reach_stop[entry_point][1])
 
-print(f"-- Output so far (last = contained triangle): {output}")
 
 # We need for sure that 2 * s_to_side + 2 + (abs(b_i) + abs(b_j) - 2) * side <= steps
 # Solving: 2 * s_to_side + 2 + (b_i + b_j - 2) * side <= steps
@@ -191,7 +171,6 @@ for height in range(contained_triangle_height + 1, max_reachable_triangle_height
             num_non_trivial_boxes += 1
             output += len(special_point_box_reach[entry_point].get(left_over_steps, special_point_box_reach_stop[entry_point][left_over_steps % 2]))
 
-print(f"Total num non-trivial boxes: {num_non_trivial_boxes}")
 
 # PRINT
 # =====

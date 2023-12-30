@@ -7,6 +7,9 @@ with open(INPUT_PATH) as file: input = file.read()
 # IMPORTS
 # =======
 
+# SOLUTION
+# ========
+
 input = [list(map(int, line.split(' '))) for line in input.splitlines()]
 
 output = 0
@@ -26,12 +29,6 @@ for line in input:
     for j in range(len(seqs) - 2, -1, -1):
         seqs[j].insert(0, seqs[j][0] - seqs[j + 1][0])
     output += seqs[0][0]
-        
-
-# SOLUTION
-# ========
-
-
 
 # PRINT
 # =====

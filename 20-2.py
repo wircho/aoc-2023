@@ -8,8 +8,6 @@ with open(INPUT_PATH) as file: input = file.read()
 # =======
 
 import re
-from itertools import product
-import time
 import inspect
 from math import lcm
 
@@ -96,7 +94,6 @@ def press_button(broadcaster_, button_press_number):
         info['queue'] = []
         for caller, pulse, f in queue:
             info[pulse] += 1
-            # print(f"{caller.__name__ if caller else None} -{pulse}-> {f.__name__}")
             info['history'].setdefault(f.__name__, {}).setdefault(button_press_number, []).append((caller.__name__ if caller else 'None', pulse))
             f((caller, pulse))
 

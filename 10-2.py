@@ -66,8 +66,6 @@ for i in range(len(input)):
             if inside % 4 == 2:
                 output += 1
         
-
-
 # PRINT
 # =====
 print(output)

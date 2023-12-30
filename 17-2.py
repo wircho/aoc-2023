@@ -26,8 +26,6 @@ for i in range(len(input)):
                 # k = 0 only makes sense if they are all 0
                 if (k == 0 or (di == 0 and dj == 0)) and (i != 0 or j != 0):
                     continue
-                # if i == 0 and j == 0 and k == 0 and di == 0 and dj == 0:
-                #     import pdb; pdb.set_trace()
                 if not exists(i - k * di, j - k * dj): continue
                 nodes.add((i, j, di, dj, k))
                 for _di, _dj in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -53,10 +51,8 @@ while queue:
     for neighbor, neighbor_dist in edges.get(current_node, {}).items():
         old_dist, old_path = shortest_paths[neighbor]
         new_dist = dist + neighbor_dist
-        # If we've found a shorter path to this neighbor, update our shortest paths data
         if new_dist < old_dist:
             shortest_paths[neighbor] = (new_dist, old_path + [current_node])
-            # Add the neighbor to the queue
             queue.append((new_dist, neighbor))
 
 output = min(shortest_paths[node][0] for node in ending_nodes)

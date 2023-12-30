@@ -7,11 +7,7 @@ with open(INPUT_PATH) as file: input = file.read()
 # IMPORTS
 # =======
 
-import re
 from itertools import product
-import time
-import inspect
-from math import lcm
 
 # SOLUTION
 # ========

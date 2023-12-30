@@ -73,8 +73,6 @@ class Brick:
     def update_supports(self):
         for cube in self.top:
             brick = Brick.cube_map.get((cube[0], cube[1], cube[2] + 1))
-            if brick == self:
-                import pdb; pdb.set_trace()
             assert brick != self
             if not brick: continue
             self.supported_bricks.add(brick)

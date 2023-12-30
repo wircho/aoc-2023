@@ -24,8 +24,6 @@ for line in lines:
     for node in nodes1: nodes.add(node)
     for node in nodes1: edges.add(tuple(sorted([node0, node])))
 
-# print(f"Number of nodes: {len(nodes)}")
-# print(f"Number of edges: {len(edges)}")
 # # VISUALIZATION
 # G = nx.Graph()
 # G.add_nodes_from(nodes)
@@ -38,7 +36,6 @@ lhs = ['frl', 'ccp', 'llm']
 rhs = ['fvm', 'thx', 'lhg']
 connecting_edges = [tuple(sorted([lhs[i], rhs[j]])) for i in range(len(lhs)) for j in range(len(rhs))]
 connecting_edges = set(connecting_edges).intersection(edges)
-print(connecting_edges)
 assert len(connecting_edges) == 3
 
 # Remove edges

@@ -30,19 +30,15 @@ for line in input:
     min_j, max_j = min(min_j, pos[1]), max(max_j, pos[1])
 
 def pop_corner(edge, i, new_corner):
-    print(f"- Found a corner with points {edge[i]}, {edge[i + 1]}, {edge[i + 2]}")
     points = [edge[i], edge[i + 1], edge[i + 2]]
     bounds_0 = (min(p[0] for p in points), max(p[0] for p in points))
     bounds_1 = (min(p[1] for p in points), max(p[1] for p in points))
     other_edges = [edge[j] for j in range(len(edge)) if j not in [i, i + 1, i + 2]]
     for p in other_edges:
         if p[0] >= bounds_0[0] and p[0] <= bounds_0[1] and p[1] >= bounds_1[0] and p[1] <= bounds_1[1]:
-            print(f"  Other edge {p} is inside the bounds, not popping")
             return 0
     edge[i + 1] = new_corner
     area_increment = (bounds_0[1] - bounds_0[0]) * (bounds_1[1] - bounds_1[0])
-    print(f"  Vertex updated to {edge[i + 1]}")
-    print(f"  Area increment: {area_increment}")
     return area_increment
 
 area = 0

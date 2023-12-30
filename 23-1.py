@@ -4,30 +4,6 @@
 INPUT_PATH = 'inputs/23.txt'
 with open(INPUT_PATH) as file: input = file.read()
 
-# input = """#.#####################
-# #.......#########...###
-# #######.#########.#.###
-# ###.....#.>.>.###.#.###
-# ###v#####.#v#.###.#.###
-# ###.>...#.#.#.....#...#
-# ###v###.#.#.#########.#
-# ###...#.#.#.......#...#
-# #####.#.#.#######.#.###
-# #.....#.#.#.......#...#
-# #.#####.#.#.#########v#
-# #.#...#...#...###...>.#
-# #.#.#v#######v###.###v#
-# #...#.>.#...>.>.#.###.#
-# #####v#.#.###v#.#.###.#
-# #.....#...#...#.#.#...#
-# #.#########.###.#.#.###
-# #...###...#...#...#.###
-# ###.###.#.###v#####v###
-# #...#...#.#.>.>.#.>.###
-# #.###.###.#.###.#.#v###
-# #.....###...###...#...#
-# #####################.#"""
-
 # IMPORTS
 # =======
 
@@ -61,8 +37,6 @@ def _all_paths_to(p, excluded_point):
         valid_neighbors.append((i, j + 1))
     if len(valid_neighbors) == 0:
         return None
-    # if p == (17, 13):
-    #     import pdb; pdb.set_trace()
     paths_to_neighbors = [all_paths_to(n, p) for n in valid_neighbors]
     paths_to_neighbors = [l for l in paths_to_neighbors if l is not None]
     paths_to_neighbors = [path + [p] for l in paths_to_neighbors for path in l] #  if p not in path]
@@ -73,16 +47,11 @@ all_paths_to_dict = {}
 def all_paths_to(p, excluded_point):
     if (p, excluded_point) not in all_paths_to_dict:
         all_paths_to_dict[(p, excluded_point)] = _all_paths_to(p, excluded_point)
-        # print(p, excluded_point, all_paths_to_dict[(p, excluded_point)])
     return all_paths_to_dict[(p, excluded_point)]
 
 all_paths_to_end = all_paths_to(end, false_end)
 
 output = max(map(len, all_paths_to_end)) - 1
-
-# best_path = max(all_paths_to_end, key=len)
-
-# print(best_path)
 
 # PRINT
 # =====

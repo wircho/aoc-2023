@@ -51,8 +51,6 @@ class Range:
                 else:
                     result.append(range)
             final_result = final_result + result
-        if ranges and not final_result:
-            import pdb; pdb.set_trace()
         return final_result
     
     @staticmethod

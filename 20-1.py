@@ -95,7 +95,6 @@ def press_button(broadcaster_):
         info['queue'] = []
         for caller, pulse, f in queue:
             info[pulse] += 1
-            # print(f"{caller.__name__ if caller else None} -{pulse}-> {f.__name__}")
             f((caller, pulse))
 
 

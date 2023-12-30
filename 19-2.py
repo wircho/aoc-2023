@@ -120,8 +120,6 @@ y = Rating()
 result = in_(y)
 """
 
-print(code)
-
 exec(code, g)
 
 result = g["result"]
